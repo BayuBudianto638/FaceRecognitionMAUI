@@ -2,6 +2,8 @@
 using FaceRecognitionMAUI.Services.FileAccess;
 using FaceRecognitionMAUI.ViewModels.Interfaces;
 using SkiaSharp;
+using System.Reflection.PortableExecutable;
+using System.Text;
 
 namespace FaceRecognitionMAUI.ViewModels;
 
@@ -22,20 +24,27 @@ public partial class MainViewModel : BaseViewModel, IMainPageViewModel
 
     private readonly Lazy<Command> _FilePickCommand;
 
-    public Command FilePickCommand => throw new NotImplementedException();
-
-    private Command FilePickCommandFactory()
+    public Command FilePickCommand => new Command(async () =>
     {
+        FilePickCommandFactory();
+    });
+
+    private async Task<Command> FilePickCommandFactory()
+    {
+        var result = await this._FileAccessService.GetFileContent();
+        if (result == null)
+        {
+            return new Command(async () => { });
+        }
+
+        var detectResult = this._DetectService.Detect(result);
+        if (detectResult == null)
+        {
+            return new Command(async () => { });
+        }
+
         return new Command(async () =>
         {
-            var result = await this._FileAccessService.GetFileContent();
-            if (result == null)
-                return;
-
-            var detectResult = this._DetectService.Detect(result);
-            if (detectResult == null)
-                return;
-
             var surface = SKSurface.Create(new SKImageInfo(detectResult.Width, detectResult.Height, SKColorType.Rgba8888));
             using var paint = new SKPaint();
             using var bitmap = SKBitmap.Decode(result);

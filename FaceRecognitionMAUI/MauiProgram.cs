@@ -1,4 +1,7 @@
-﻿namespace FaceRecognitionMAUI;
+﻿using FaceRecognitionMAUI.Services.Detect;
+using FaceRecognitionMAUI.Services.FileAccess;
+
+namespace FaceRecognitionMAUI;
 
 public static class MauiProgram
 {
@@ -17,6 +20,10 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton<MainPage>();
 
-		return builder.Build();
+		builder.Services.AddSingleton<IFileAccessAppService, FileAccessAppService>();
+
+        builder.Services.AddSingleton<IDetectAppService, DetectAppService>();
+
+        return builder.Build();
 	}
 }

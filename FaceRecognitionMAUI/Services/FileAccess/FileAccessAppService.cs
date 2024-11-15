@@ -10,7 +10,7 @@ namespace FaceRecognitionMAUI.Services.FileAccess
     {
         public async Task<byte[]> GetFileContent()
         {
-            var result = await MediaPicker.PickPhotoAsync();
+            var result = await FilePicker.PickAsync();
             if (result == null)
                 return null;
 

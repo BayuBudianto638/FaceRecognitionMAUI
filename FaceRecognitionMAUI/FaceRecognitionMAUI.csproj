@@ -53,6 +53,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Helpers\**" />
+	  <Compile Remove="Helpers\**" />
+	  <EmbeddedResource Remove="Helpers\**" />
+	  <MauiCss Remove="Helpers\**" />
+	  <MauiXaml Remove="Helpers\**" />
+	  <None Remove="Helpers\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.MVVM" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
@@ -60,10 +69,6 @@
 		<PackageReference Include="NcnnDotNet" Version="0.0.0.20230101" />
 		<PackageReference Include="SkiaSharp" Version="2.88.7" />
 		<PackageReference Include="UltraFaceDotNet" Version="1.0.0.2" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Helpers\" />
 	</ItemGroup>
 
 	<PropertyGroup Label="MauiAppAccelerator">
